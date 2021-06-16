@@ -1,5 +1,5 @@
 document.getElementById("notion_auth_button").addEventListener('click', function () {
-    var newURL = "https://api.notion.com/v1/oauth/authorize?client_id=951744be-9fe3-4fc4-9901-7877db5a67f0&redirect_uri=https%3A%2F%2Fpriyansi.github.io%2Farxivtonotion.github.io%2F&response_type=code";
+    var newURL = "https://api.notion.com/v1/oauth/authorize?client_id=951744be-9fe3-4fc4-9901-7877db5a67f0&redirect_uri=https%3A%2F%2Farxivtonotion.github.io%2F&response_type=code";
     chrome.tabs.create({ url: newURL });
 });
 
