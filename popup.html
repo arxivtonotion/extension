@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="popup.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body style="width: 400px">
-	<h1>yo this is arXiv to Notion</h1>
-	<button id="notion_auth_button">Add to Notion</button>
-	<button id="arxiv_button">Grab arXiv Link</button>
+<body>
+	<div class="card" style="width: 20rem;">
+		<div class="card-body">
+			<h5 class="card-title">ArXiv to Notion</h5>
+			<p class="card-text">Connect to your Notion page/database and save all metadata of any arXiv paper to Notion with a single click.</p>
+			<button type="button" class="btn btn-primary" id="notion_auth_button">Add to Notion</button>
+			<button type="button" class="btn btn-primary" id="arxiv_button">Grab arXiv Link</button>
+		</div>
+	</div>
 	<script src="popup.js"></script>
 	<script src="arxiv.js"></script>
 	<script src="notion.js"></script>

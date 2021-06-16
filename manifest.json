@@ -3,9 +3,9 @@
     "description": "",
     "version": "1.0",
     "manifest_version": 3,
-	"permissions": [
-		"activeTab"
-	],
+    "permissions": [
+        "activeTab"
+    ],
     "action": {
         "default_title": "arXiv to Notion",
         "default_icon": "icon.png",
