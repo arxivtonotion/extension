@@ -6,7 +6,12 @@ async function getCurrentTabURL() {
 
 add_click_bind = async () => {
     document.getElementById("arxiv_button").addEventListener("click", async () => {
-        console.log(await getCurrentTabURL())
+        const url = await getCurrentTabURL()
+		try {
+			const metadata = await getMetadataFromArxivURL(url)
+		} catch (e) {
+			alert(e)
+		}
     });
 };
 
