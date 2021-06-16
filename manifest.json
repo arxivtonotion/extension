@@ -3,9 +3,13 @@
     "description": "",
     "version": "1.0",
     "manifest_version": 3,
-	"permissions": [
-		"activeTab"
-	],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["activeTab", "storage"],
+    "externally_connectable": {
+        "matches": ["https://arxivtonotion.github.io/*"]
+    },
     "action": {
         "default_title": "arXiv to Notion",
         "default_icon": "icon.png",

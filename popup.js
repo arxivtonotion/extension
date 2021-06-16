@@ -5,15 +5,17 @@ async function getCurrentTabURL() {
 }
 
 add_click_bind = async () => {
-    document.getElementById("arxiv_button").addEventListener("click", async () => {
-        const url = await getCurrentTabURL()
-        try {
-            const metadata = await getMetadataFromArxivURL(url)
-            console.log(metadata)
-        } catch (e) {
-            alert(e)
-        }
-    });
+    document
+        .getElementById("arxiv_button")
+        .addEventListener("click", async () => {
+            const url = await getCurrentTabURL();
+            try {
+                const metadata = await getMetadataFromArxivURL(url);
+                console.log(metadata);
+            } catch (e) {
+                alert(e);
+            }
+        });
 };
 
 document.addEventListener("DOMContentLoaded", () => {
