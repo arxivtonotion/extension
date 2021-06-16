@@ -9,6 +9,7 @@ add_click_bind = async () => {
         const url = await getCurrentTabURL()
 		try {
 			const metadata = await getMetadataFromArxivURL(url)
+			console.log(metadata)
 		} catch (e) {
 			alert(e)
 		}
