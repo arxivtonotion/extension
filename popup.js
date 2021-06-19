@@ -15,7 +15,10 @@ const bind_arxiv_button = async () => {
 
                 let n = new Notion();
                 const token = await n.authToken()
+				const databases = await n.getDatabases(token)
 				console.log(token)
+				const properties = n.getDatabaseProperties(databases[0])
+				await n.writePaperMetadataToDatabase(properties, metadata, token)
             } catch (e) {
                 alert(e);
             }
