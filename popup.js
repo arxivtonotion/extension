@@ -15,10 +15,25 @@ const bind_arxiv_button = async () => {
 
                 let n = new Notion();
                 const token = await n.authToken()
-				const databases = await n.getDatabases(token)
-				console.log(token)
-				const properties = n.getDatabaseProperties(databases[0])
-				await n.writePaperMetadataToDatabase(properties, metadata, token)
+                const databases = await n.getDatabases(token)
+                console.log(token)
+                console.log(databases)
+                document.getElementById("notion_databases").innerHTML = databases
+                for (let id in databases) {
+                    document.getElementById("notion_databases").innerHTML = databases[id]["title"][0]["plain_text"]
+                }
+                // var dropBox = document.getElementById("dropBox");
+                // dropBox.onchange = getValue
+                // for (let id in databases) {
+                //     dropBox.add(new Option(databases[id]["title"][0]["plain_text"]));
+                // }
+
+                // // function getValue(e) {
+                // //     var drop_val = e.target.value;
+                // //     // Do whatever you would like to do with 'drop_val'
+                // // }
+                const properties = n.getDatabaseProperties(databases[0])
+                await n.writePaperMetadataToDatabase(properties, metadata, token)
             } catch (e) {
                 alert(e);
             }
@@ -38,4 +53,10 @@ const bind_notion_button = () => {
 document.addEventListener("DOMContentLoaded", () => {
     bind_arxiv_button();
     bind_notion_button();
+});
+
+let dropdown = document.querySelector('.dropdown');
+dropdown.addEventListener('click', function(event) {
+  event.stopPropagation();
+  dropdown.classList.toggle('is-active');
 });
