@@ -1,8 +1,18 @@
 class Notion {
-    async authToken() {
+    async init() {
+        try {
+            this.authToken = await this.getAuthTokenFromStorage();
+            this.databases = await this.getDatabases(this.authToken);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async getAuthTokenFromStorage() {
         return new Promise((resolve, reject) => {
             chrome.storage.sync.get("access_token", (token) => {
-                if (Object.keys(token).length === 0) reject("no auth token");
+                if (Object.keys(token).length === 0)
+                    reject("no auth token found in storage");
                 else {
                     resolve(token["access_token"]);
                 }
@@ -28,11 +38,12 @@ class Notion {
                 },
             }
         ).catch((err) => console.log(err));
-        const searchResultData = await response.json();
 
+        const searchResultData = await response.json();
         let databases = searchResultData["results"].filter(
             (x) => x["object"] === "database"
         );
+
         return databases;
     }
 
@@ -149,9 +160,7 @@ class Notion {
             }
         }
 
-        console.log(requestBody);
-
-        const r = await fetch("https://arxivtonotion.herokuapp.com/v1/pages", {
+        await fetch("https://arxivtonotion.herokuapp.com/v1/pages", {
             method: "POST",
             headers: new Headers({
                 Authorization: `Bearer ${token}`,
@@ -160,42 +169,5 @@ class Notion {
             }),
             body: JSON.stringify(requestBody),
         }).catch((err) => console.log(err));
-
-        const d = await r.json();
-        console.log(d);
     }
 }
-
-// import { Client } from "@notionhq/client"
-
-// const notion = new Client({ auth: process.env.NOTION_KEY })
-
-// const databaseId = process.env.NOTION_DATABASE_ID
-
-// async function addItem(text) {
-//     try {
-//         await notion.request({
-//             path: "pages",
-//             method: "POST",
-//             body: {
-//                 parent: { database_id: databaseId },
-//                 properties: {
-//                     title: {
-//                         title: [
-//                             {
-//                                 "text": {
-//                                     "content": text
-//                                 }
-//                             }
-//                         ]
-//                     }
-//                 }
-//             },
-//         })
-//         console.log("Success! Entry added.")
-//     } catch (error) {
-//         console.error(error.body)
-//     }
-// }
-
-// addItem("Yurts in Big Sur, California")

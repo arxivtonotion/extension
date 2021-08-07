@@ -1,58 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body style="font-family: 'Inter', sans-serif">
-    <div class="card">
-      <div class="card-content">
-        <p class="title">arXiv to Notion</p>
-        <p class="subtitle">
-          Connect to your Notion page/database and save all metadata of any
-          arXiv paper to Notion with a single click.
-        </p>
-      </div>
-      <footer class="card-footer">
-        <div class="card-footer-item">
-          <button class="button is-info is-light" id="notion_auth_button">
-            Add to Notion
-          </button>
-        </div>
-        <div class="card-footer-item">
-          <div class="dropdown">
-            <div class="dropdown-trigger">
-              <button
-                class="button is-info is-light"
-                aria-haspopup="true"
-                aria-controls="dropdown-menu"
-              >
-                <span id="arxiv_button ">Grab arXiv Link</span>
-                <span class="icon is-small">
-                  <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
-              </button>
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+
+    <body style="font-family: 'Inter', sans-serif">
+        <div class="card" style="width: 30rem">
+            <div class="card-content">
+                <button
+                    class="button is-loading mb-3"
+                    id="authenticating_loading_button"
+                ></button>
+                <span
+                    style="display: none"
+                    id="notion_authenticated_tag"
+                    class="tag is-success mb-4"
+                    >Authenticated with Notion</span
+                >
+
+                <span
+                    style="display: none"
+                    id="valid_arxiv_url_tag"
+                    class="tag is-success mb-4"
+                    >Valid arXiv Paper</span
+                >
+
+                <span
+                    style="display: none"
+                    id="notion_unauthenticated_tag"
+                    class="tag is-danger mb-4"
+                    >Please Authenticate with Notion</span
+                >
+
+                <span
+                    style="display: none"
+                    id="invalid_arxiv_url_tag"
+                    class="tag is-danger mb-4"
+                    >Not an arXiv paper</span
+                >
+
+                <p class="title is-size-4">arXiv to Notion</p>
+                <p
+                    class="subtitle is-size-6 mt-1 mb-3"
+                    style="font-weight: 500"
+                >
+                    Select the Database where you want to add the
+                    paper
+                </p>
+
+                <div class="columns is-mobile">
+                    <div class="column is-narrow">
+                        <div class="select">
+                            <select id="databases_select">
+                                <option>Select Database</option>
+                            </select>
+                        </div>
+                        <!-- <i class="fas fa-redo" id="refresh_databases_icon"></i> -->
+                    </div>
+
+                    <div class="column is-narrow">
+                        <button class="button is-link" id="arxiv_button">
+                            Add Paper
+                        </button>
+                    </div>
+                </div>
+
+                <button
+                    class="button is-info is-normal"
+                    id="notion_auth_button"
+                >
+                    <i class="fas fa-sign-in-alt mr-3"></i> Login with Notion
+                </button>
             </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                <span class="dropdown-item" id="notion_databases"></span>
-              </div>
-            </div>
-          </div>
         </div>
-      </footer>
-    </div>
-    <script src="popup.js"></script>
-    <script src="arxiv.js"></script>
-    <script src="notion.js"></script>
-    <script src="fa.js"></script>
-  </body>
+        <script src="popup.js"></script>
+        <script src="arxiv.js"></script>
+        <script src="notion.js"></script>
+        <script src="fa.js"></script>
+    </body>
 </html>

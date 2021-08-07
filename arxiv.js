@@ -5,6 +5,26 @@ const getMetadataFromArxivURL = async (url) => {
     return metadata;
 };
 
+const isArxivURL = (url) => {
+    const u = new URL(url);
+    if (u.origin == "https://arxiv.org") {
+        const pathname_split = u.pathname.split("/");
+        if (pathname_split.length == 3) {
+            if (pathname_split[1] == "pdf") {
+                return true;
+            } else if (pathname_split[1] == "abs") {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+};
+
 const parseIDFromArxivURL = (url) => {
     const u = new URL(url);
     if (u.origin == "https://arxiv.org") {

@@ -4,43 +4,57 @@ const getCurrentTabURL = async () => {
     return tab.url;
 };
 
-const bind_arxiv_button = async () => {
+const bind_add_paper_to_notion_button = async (notionInstance) => {
     document
         .getElementById("arxiv_button")
         .addEventListener("click", async () => {
             const url = await getCurrentTabURL();
             try {
+                document
+                    .getElementById("arxiv_button")
+                    .classList.add("is-loading");
                 const metadata = await getMetadataFromArxivURL(url);
-                console.log(metadata);
+                const token = notionInstance.authToken;
+                const databases = notionInstance.databases;
+                const selectedDatabaseName =
+                    document.getElementById("databases_select").value;
 
-                let n = new Notion();
-                const token = await n.authToken()
-                const databases = await n.getDatabases(token)
-                console.log(token)
-                console.log(databases)
-                document.getElementById("notion_databases").innerHTML = databases
-                for (let id in databases) {
-                    document.getElementById("notion_databases").innerHTML = databases[id]["title"][0]["plain_text"]
+                let selectedDatabase = databases[0];
+                for (const db of databases) {
+                    console.log(db);
+                    if (db["title"][0]["plain_text"] == selectedDatabaseName) {
+                        selectedDatabase = db;
+                        break;
+                    }
                 }
-                // var dropBox = document.getElementById("dropBox");
-                // dropBox.onchange = getValue
-                // for (let id in databases) {
-                //     dropBox.add(new Option(databases[id]["title"][0]["plain_text"]));
-                // }
 
-                // // function getValue(e) {
-                // //     var drop_val = e.target.value;
-                // //     // Do whatever you would like to do with 'drop_val'
-                // // }
-                const properties = n.getDatabaseProperties(databases[0])
-                await n.writePaperMetadataToDatabase(properties, metadata, token)
+                console.log(token, metadata, databases);
+
+                const properties =
+                    notionInstance.getDatabaseProperties(selectedDatabase);
+                await notionInstance.writePaperMetadataToDatabase(
+                    properties,
+                    metadata,
+                    token
+                );
+
+                document
+                    .getElementById("arxiv_button")
+                    .classList.remove("is-loading");
+                document.getElementById("arxiv_button").innerHTML =
+                    '<i class="fas fa-check-circle"></i>';
+                setTimeout(() => {
+                    document.getElementById("arxiv_button").innerHTML =
+                        "Add Paper";
+                }, 700);
             } catch (e) {
-                alert(e);
+                console.log(e);
+                window.alert("This page is not an arxiv page");
             }
         });
 };
 
-const bind_notion_button = () => {
+const bind_authenticate_notion_button = () => {
     document
         .getElementById("notion_auth_button")
         .addEventListener("click", function () {
@@ -50,13 +64,37 @@ const bind_notion_button = () => {
         });
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    bind_arxiv_button();
-    bind_notion_button();
-});
+document.addEventListener("DOMContentLoaded", async () => {
+    bind_authenticate_notion_button();
 
-let dropdown = document.querySelector('.dropdown');
-dropdown.addEventListener('click', function(event) {
-  event.stopPropagation();
-  dropdown.classList.toggle('is-active');
+    const url = await getCurrentTabURL();
+    if (isArxivURL(url)) {
+        document.getElementById("valid_arxiv_url_tag").style.display = "";
+    } else {
+        document.getElementById("invalid_arxiv_url_tag").style.display = "";
+    }
+
+    try {
+        let n = new Notion();
+        await n.init();
+        document.getElementById("notion_authenticated_tag").style.display = "";
+        document.getElementById("authenticating_loading_button").style.display =
+            "none";
+        bind_add_paper_to_notion_button(n);
+
+        console.log(n.databases);
+
+        let databasesSelect = document.getElementById("databases_select");
+        databasesSelect.innerHTML = "";
+        n.databases.forEach((db) => {
+            let node = document.createElement("option");
+            node.appendChild(
+                document.createTextNode(db["title"][0]["plain_text"])
+            );
+            databasesSelect.appendChild(node);
+        });
+    } catch (err) {
+        document.getElementById("notion_unauthenticated_tag").style.display =
+            "";
+    }
 });
