@@ -1,3 +1,5 @@
+// Utility functions to handle data from arXiv API
+
 const getMetadataFromArxivURL = async (url) => {
     const id = parseIDFromArxivURL(url);
     const xml = await getXMLFromID(id);

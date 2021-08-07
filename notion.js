@@ -1,3 +1,4 @@
+// Notion API abstraction
 class Notion {
     async init() {
         try {
@@ -11,8 +12,7 @@ class Notion {
     async getAuthTokenFromStorage() {
         return new Promise((resolve, reject) => {
             chrome.storage.sync.get("access_token", (token) => {
-                if (Object.keys(token).length === 0)
-                    reject("no auth token found in storage");
+                if (Object.keys(token).length === 0) reject("no auth token found in storage");
                 else {
                     resolve(token["access_token"]);
                 }
@@ -21,28 +21,23 @@ class Notion {
     }
 
     async getDatabases(token) {
-        const response = await fetch(
-            "https://arxivtonotion.herokuapp.com/v1/search/",
-            {
-                method: "POST",
-                headers: new Headers({
-                    Authorization: `Bearer ${token}`,
-                    "Notion-Version": "2021-05-13",
-                }),
-                body: {
-                    query: "",
-                    sort: {
-                        direction: "ascending",
-                        timestamp: "last_edited_time",
-                    },
+        const response = await fetch("https://arxivtonotion.herokuapp.com/v1/search/", {
+            method: "POST",
+            headers: new Headers({
+                Authorization: `Bearer ${token}`,
+                "Notion-Version": "2021-05-13",
+            }),
+            body: {
+                query: "",
+                sort: {
+                    direction: "ascending",
+                    timestamp: "last_edited_time",
                 },
-            }
-        ).catch((err) => console.log(err));
+            },
+        }).catch((err) => console.log(err));
 
         const searchResultData = await response.json();
-        let databases = searchResultData["results"].filter(
-            (x) => x["object"] === "database"
-        );
+        let databases = searchResultData["results"].filter((x) => x["object"] === "database");
 
         return databases;
     }
@@ -119,8 +114,7 @@ class Notion {
 
             switch (key) {
                 case "PDF Link":
-                    requestBody["properties"][key]["url"] =
-                        metadata["pdf_link"];
+                    requestBody["properties"][key]["url"] = metadata["pdf_link"];
                     break;
                 case "Primary Category":
                     requestBody["properties"][key]["select"] = {
@@ -138,13 +132,10 @@ class Notion {
                     };
                     break;
                 case "Paper Link":
-                    requestBody["properties"][key]["url"] =
-                        metadata["paper_link"];
+                    requestBody["properties"][key]["url"] = metadata["paper_link"];
                     break;
                 case "Categories":
-                    requestBody["properties"][key]["multi_select"] = metadata[
-                        "categories"
-                    ].map((x) => {
+                    requestBody["properties"][key]["multi_select"] = metadata["categories"].map((x) => {
                         return { name: x };
                     });
                     break;

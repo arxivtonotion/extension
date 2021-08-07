@@ -2,59 +2,34 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-        />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap"
-            rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
     </head>
 
     <body style="font-family: 'Inter', sans-serif">
         <div class="card" style="width: 30rem">
             <div class="card-content">
-                <button
-                    class="button is-loading mb-3"
-                    id="authenticating_loading_button"
-                ></button>
-                <span
-                    style="display: none"
-                    id="notion_authenticated_tag"
-                    class="tag is-success mb-4"
+                <button class="button is-loading mb-3" id="authenticating_loading_button"></button>
+                <span style="display: none" id="notion_authenticated_tag" class="tag is-success mb-4"
                     >Authenticated with Notion</span
                 >
 
-                <span
-                    style="display: none"
-                    id="valid_arxiv_url_tag"
-                    class="tag is-success mb-4"
+                <span style="display: none" id="valid_arxiv_url_tag" class="tag is-success mb-4"
                     >Valid arXiv Paper</span
                 >
 
-                <span
-                    style="display: none"
-                    id="notion_unauthenticated_tag"
-                    class="tag is-danger mb-4"
+                <span style="display: none" id="notion_unauthenticated_tag" class="tag is-danger mb-4"
                     >Please Authenticate with Notion</span
                 >
 
-                <span
-                    style="display: none"
-                    id="invalid_arxiv_url_tag"
-                    class="tag is-danger mb-4"
+                <span style="display: none" id="invalid_arxiv_url_tag" class="tag is-danger mb-4"
                     >Not an arXiv paper</span
                 >
 
                 <p class="title is-size-4">arXiv to Notion</p>
-                <p
-                    class="subtitle is-size-6 mt-1 mb-3"
-                    style="font-weight: 500"
-                >
-                    Select the Database where you want to add the
-                    paper
+                <p class="subtitle is-size-6 mt-1 mb-3" style="font-weight: 500">
+                    Select the Database where you want to add the paper
                 </p>
 
                 <div class="columns is-mobile">
@@ -68,16 +43,11 @@
                     </div>
 
                     <div class="column is-narrow">
-                        <button class="button is-link" id="arxiv_button">
-                            Add Paper
-                        </button>
+                        <button class="button is-link" id="arxiv_button">Add Paper</button>
                     </div>
                 </div>
 
-                <button
-                    class="button is-info is-normal"
-                    id="notion_auth_button"
-                >
+                <button class="button is-info is-normal" id="notion_auth_button">
                     <i class="fas fa-sign-in-alt mr-3"></i> Login with Notion
                 </button>
             </div>
