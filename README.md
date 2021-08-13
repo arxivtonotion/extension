@@ -4,13 +4,13 @@ Save arXiv papers to Notion with a single click.
 
 ## How to Use
 
-1. Duplicate this [template](https://www.notion.so/jhr/b8fe7261227b44488a55e09518663d9f?v=24687288fd854a1394f7c1159b4c7cf7) in your Notion
+1. Duplicate [this template](https://bit.ly/arxiv-to-notion-template) in your Notion
 2. Add extension to Chrome
-3. Authenticate Notion
+3. Authenticate Notion and give permission to the page you created by duplicating the template
 4. Open any arXiv paper in the browser
-5. Select **Add to Notion**
-6. Select the template database you duplicated above
-7. Check your Notion
+5. Select the page you gave permission to above
+6. Select **Add to Notion**
+8. Check your Notion
 
 ## Run Locally
 
