@@ -148,6 +148,9 @@ class Notion {
                         },
                     ];
                     break;
+                default:
+                    // don't add property value to request if we don't know how to fill it 
+                    delete requestBody["properties"][key];
             }
         }
 
